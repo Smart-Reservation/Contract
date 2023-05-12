@@ -163,12 +163,35 @@
 	{
 		"inputs": [
 			{
+				"internalType": "address",
+				"name": "_store",
+				"type": "address"
+			},
+			{
 				"internalType": "uint256",
 				"name": "_depositAmount",
 				"type": "uint256"
 			}
 		],
 		"name": "setDepositAmount",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_store",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_owner",
+				"type": "address"
+			}
+		],
+		"name": "setStoreOwner",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -335,6 +358,25 @@
 				"internalType": "enum Payment.ReservationStatus",
 				"name": "status",
 				"type": "uint8"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "storeOwners",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
 			}
 		],
 		"stateMutability": "view",
