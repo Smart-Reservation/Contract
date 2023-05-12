@@ -23,7 +23,7 @@ contract UserRegistration is Ownable {
 
 
     // 해시화된 주소 정보 가져오기 함수
-    function getHashedInfo() external view onlyOwner returns (bytes32) {
+    function getHashedInfo() external view returns (bytes32) {
         require(users[msg.sender].registered, "User not registered");
         return users[msg.sender].hashedAddress;
     }
