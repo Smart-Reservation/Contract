@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >= 0.7.2 < 0.9.0;
+pragma solidity ^0.8.18;
 import "./userRegistration.sol";
 
 
@@ -17,7 +17,7 @@ contract OwnerRegistration is UserRegistration {
     event OwnerRegistered(bytes32 indexed hashedInfo);
 
     // 오너 등록 함수
-    function registerOwner(string memory ownerInfo) external onlyOwner {
+    function registerOwner(string memory ownerInfo) external onlyOwner{
         // 이미 등록된 오너인지 확인
         bytes32 hashedInfo = keccak256(abi.encodePacked(msg.sender, ownerInfo));
         require(!owners[hashedInfo].isOwner, "Owner is already registered.");
@@ -37,11 +37,19 @@ contract OwnerRegistration is UserRegistration {
         bytes32 hashedInfo = keccak256(abi.encodePacked(msg.sender, ownerInfo));
         return owners[hashedInfo].isOwner;
     }
-    //예약금 설정(오너)
-    mapping(address => uint256) public depositAmounts;
 
-    function setDepositAmount(uint256 _depositAmount) external {
-        depositAmounts[msg.sender] = _depositAmount;
+    mapping(address => uint256) public depositAmounts; // 예약금
+    mapping(address => address) public storeOwners; // 가게와 소유자를 매핑
+
+    function setStoreOwner(address _store, address _owner) public {
+        storeOwners[_store] = _owner;
     }
- 
+
+    function setDepositAmount(address _store, uint256 _depositAmount) external {
+        // 가게의 소유자인지 확인
+        bytes32 hashedInfo = keccak256(abi.encodePacked(msg.sender));
+        require(owners[hashedInfo].isOwner, "Only the owner can set the deposit amount.");
+
+        depositAmounts[_store] = _depositAmount;
+    }
 }
