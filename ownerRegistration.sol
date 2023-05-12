@@ -17,7 +17,7 @@ contract OwnerRegistration is UserRegistration {
     event OwnerRegistered(bytes32 indexed hashedInfo);
 
     // 오너 등록 함수
-    function registerOwner(string memory ownerInfo) external {
+    function registerOwner(string memory ownerInfo) external onlyOwner {
         // 이미 등록된 오너인지 확인
         bytes32 hashedInfo = keccak256(abi.encodePacked(msg.sender, ownerInfo));
         require(!owners[hashedInfo].isOwner, "Owner is already registered.");
@@ -40,7 +40,7 @@ contract OwnerRegistration is UserRegistration {
     //예약금 설정(오너)
     mapping(address => uint256) public depositAmounts;
 
-    function setDepositAmount(uint256 _depositAmount) external onlyOwner {
+    function setDepositAmount(uint256 _depositAmount) external {
         depositAmounts[msg.sender] = _depositAmount;
     }
  
