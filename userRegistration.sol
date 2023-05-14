@@ -13,7 +13,7 @@ contract UserRegistration is Ownable {
 
     event UserRegistered(address indexed user);
 
-    // 사용자 등록 함수
+    // Function to register a user
     function register() external {
         require(!users[msg.sender].registered, "User already registered");
 
@@ -24,7 +24,7 @@ contract UserRegistration is Ownable {
     }
 
 
-    // 해시화된 주소 정보 가져오기 함수
+    // Function to get the hashed address information
     function getHashedInfo() external view returns (bytes32) {
         require(users[msg.sender].registered, "User not registered");
         return users[msg.sender].hashedAddress;
