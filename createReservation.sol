@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.18;
 
+
 // Reservation Creation Contract
 contract CreateReservation {
     // Structure to hold reservation information
@@ -29,7 +30,7 @@ contract CreateReservation {
         // Create a new reservation
         Reservation storage newReservation = reservations[_reservationId];
         newReservation.id = _reservationId;
-        newReservation.depositAmount = _depositAmount;
+        newReservation.depositAmount = _depositAmount * (10 ** 18);
         newReservation.user = payable(msg.sender);
         newReservation.owner = _owner;
         newReservation.status = ReservationStatus.Pending;
