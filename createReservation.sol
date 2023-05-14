@@ -33,8 +33,5 @@ contract CreateReservation {
         newReservation.user = payable(msg.sender);
         newReservation.owner = _owner;
         newReservation.status = ReservationStatus.Pending;
-
-        // Emit the reservation creation event
-        emit ReservationCreated(_reservationId, msg.sender);
     }
 }
