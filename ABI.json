@@ -15,6 +15,24 @@
 	{
 		"inputs": [
 			{
+				"internalType": "address payable",
+				"name": "_owner",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_depositAmount",
+				"type": "uint256"
+			}
+		],
+		"name": "createReservation",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "uint256",
 				"name": "requiredDepositAmount",
 				"type": "uint256"
@@ -161,6 +179,25 @@
 		"type": "function"
 	},
 	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "user",
+				"type": "address"
+			}
+		],
+		"name": "ReservationCreated",
+		"type": "event"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "address",
@@ -217,7 +254,7 @@
 				"type": "uint256"
 			},
 			{
-				"internalType": "enum Payment.ReservationStatus",
+				"internalType": "enum CreateReservation.ReservationStatus",
 				"name": "newStatus",
 				"type": "uint8"
 			}
@@ -293,6 +330,19 @@
 	},
 	{
 		"inputs": [],
+		"name": "nextReservationId",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
 		"name": "owner",
 		"outputs": [
 			{
@@ -359,6 +409,11 @@
 		"outputs": [
 			{
 				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
 				"name": "depositAmount",
 				"type": "uint256"
 			},
@@ -373,7 +428,7 @@
 				"type": "address"
 			},
 			{
-				"internalType": "enum Payment.ReservationStatus",
+				"internalType": "enum CreateReservation.ReservationStatus",
 				"name": "status",
 				"type": "uint8"
 			}
