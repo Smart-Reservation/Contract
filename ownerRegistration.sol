@@ -41,10 +41,6 @@ contract OwnerRegistration is UserRegistration {
     mapping(address => uint256) public depositAmounts; // Reservation deposit amount
     mapping(address => address) public storeOwners; // Mapping between stores and owners
 
-    function setStoreOwner(address _store, address _owner) public {
-        storeOwners[_store] = _owner;
-    }
-
     function setDepositAmount(address _store, uint256 _depositAmount) external {
         // Check if the caller is the owner of the store
         bytes32 hashedInfo = keccak256(abi.encodePacked(msg.sender));
