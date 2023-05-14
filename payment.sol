@@ -15,8 +15,7 @@ contract Payment is CreateReservation, OwnerRegistration {
     event DepositTransferred(address indexed user, address indexed owner, uint256 amount);
 
 
-
-    //예약금 입금 함수
+    // Function for depositing reservation deposit amount
     function deposit(uint256 requiredDepositAmount) external payable {
         uint256 amount = msg.value;
 
@@ -26,18 +25,17 @@ contract Payment is CreateReservation, OwnerRegistration {
         emit DepositReceived(msg.sender, amount);
     }
 
-
-    //예약이 유효한지, 예약상태 확인 후 환불 조건 충족되는지 확인, 
+    // Function for refunding a reservation if it is valid and meets the refund conditions 
     function refundReservation(uint256 reservationId) external {
         Reservation storage reservation = reservations[reservationId];
 
-        // 예약 상태 확인
+        // Check reservation status
         require(
             reservation.status == ReservationStatus.CancelledByUser || reservation.status == ReservationStatus.NoShow || reservation.status == ReservationStatus.CancelledByOwner,
             "Reservation is not in a refundable state."
         );
 
-        // 환불 대상 결정 (유저 취소 또는 노쇼 시 오너에게, 오너 취소 시 유저에게)
+        // Determine the refund recipient (to the owner if cancelled by the user or no-show, to the user if cancelled by the owner)
         address payable refundRecipient;
         if (reservation.status == ReservationStatus.CancelledByUser || reservation.status == ReservationStatus.NoShow) {
             refundRecipient = reservation.owner;
@@ -45,27 +43,27 @@ contract Payment is CreateReservation, OwnerRegistration {
             refundRecipient = reservation.user;
         }
 
-        // 환불 처리
+        // Process the refund
         uint256 refundAmount = reservation.depositAmount;
         reservation.depositAmount = 0;
         refundRecipient.transfer(refundAmount);
     }
 
 
-     // 예약 확인 후 예약금 반환
+     // Function for confirming a reservation and returning the deposit amount
     function confirmReservation(uint256 reservationId) external {
         Reservation storage reservation = reservations[reservationId];
 
-        // 예약 상태 확인
+        // Check reservation status
         require(
             reservation.status == ReservationStatus.Pending,
             "Reservation is not in a pending state."
         );
 
-        // 예약 상태를 확정으로 변경
+        // Change reservation status to confirmed
         reservation.status = ReservationStatus.Confirmed;
 
-        // 예약금 반환 처리
+        // Return the deposit amount
         uint256 refundAmount = reservation.depositAmount;
         reservation.depositAmount = 0;
         reservation.user.transfer(refundAmount);
